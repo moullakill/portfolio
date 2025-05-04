@@ -84,6 +84,13 @@
       color: #0F0;
       text-shadow: 0 0 5px #0F0;
     }
+
+    .desc {
+      font-style: italic;
+      color: #0F0;
+      margin-left: 10px;
+      opacity: 0.7;
+    }
   </style>
 </head>
 <body>
@@ -92,7 +99,7 @@
 
   <!-- Contenu principal -->
   <div class="content">
-    <img src="https://raw.githubusercontent.com/moullakill/portfolio/main/logo%20hide.png" alt="Logo" class="logo">
+    <img src="https://raw.githubusercontent.com/moullakill/portfolio/main/logo.png" alt="Logo" class="logo">
     <h1 class="typing-effect">Bienvenue sur mon portfolio</h1>
     <p>Développeur passionné par la cybersécurité et le hacking éthique.</p>
 
@@ -129,7 +136,7 @@
     setInterval(draw, 33);
   </script>
 
-  <!-- Fonction JS pour forcer le téléchargement -->
+  <!-- Fonction pour forcer le téléchargement -->
   <script>
     async function forceDownload(url, filename) {
       const response = await fetch(url);
@@ -153,25 +160,47 @@
 
       files.forEach(file => {
         const name = file.name;
-
         if (name.includes('hide')) return;
 
-        const displayName = name.replace(/_?download_on|_?download_off/, '');
+        // Extraire description entre <>
+        const descMatch = name.match(/<([^>]+)>/);
+        const description = descMatch ? descMatch[1] : '';
+
+        // Nettoyer le nom (enlever download_on/off et <desc>)
+        let cleanName = name
+          .replace(/_?download_on|_?download_off/, '')
+          .replace(/<[^>]*>/, '');
+
         const fileDiv = document.createElement('div');
 
+        // Créer la description en italique
+        const descSpan = description ? ` <span class="desc">${description}</span>` : '';
+
         if (name.includes('download_off')) {
-          fileDiv.textContent = displayName;
+          fileDiv.innerHTML = `${cleanName}${descSpan}`;
         } else if (name.includes('download_on')) {
           const button = document.createElement('button');
-          button.textContent = displayName;
-          button.onclick = () => forceDownload(file.download_url, displayName);
+          button.textContent = cleanName;
+          button.onclick = () => forceDownload(file.download_url, cleanName);
           fileDiv.appendChild(button);
+          if (description) {
+            const desc = document.createElement('span');
+            desc.className = 'desc';
+            desc.textContent = ` ${description}`;
+            fileDiv.appendChild(desc);
+          }
         } else {
           const link = document.createElement('a');
           link.href = file.download_url;
-          link.textContent = displayName;
-          link.download = displayName;
+          link.textContent = cleanName;
+          link.download = cleanName;
           fileDiv.appendChild(link);
+          if (description) {
+            const desc = document.createElement('span');
+            desc.className = 'desc';
+            desc.textContent = ` ${description}`;
+            fileDiv.appendChild(desc);
+          }
         }
 
         container.appendChild(fileDiv);
