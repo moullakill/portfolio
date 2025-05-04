@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NoComHack - Portfolio de Pentester</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: 'Press Start 2P', monospace;
+        background-color: #0f172a; /* Couleur de fond sombre */
+        color: #e2e8f0; /* Couleur de texte claire */
+      }
+      .container {
+        max-width: 800px; /* Largeur maximale du contenu */
+        margin: 0 auto; /* Centrer le contenu horizontalement */
+        padding: 2rem; /* Espacement intérieur */
+      }
+      h1, h2 {
+        font-weight: bold; /* Texte en gras */
+        margin-bottom: 1rem; /* Espacement sous les titres */
+        color: #6ee7b7; /* Couleur vert turquoise pour les titres */
+      }
+      p {
+        margin-bottom: 1rem; /* Espacement sous les paragraphes */
+        line-height: 1.6; /* Hauteur de ligne pour une meilleure lisibilité */
+      }
+      a {
+        color: #3b82f6; /* Couleur bleu pour les liens */
+        text-decoration: none; /* Supprimer la décoration de soulignement par défaut */
+        word-wrap: break-word;
+      }
+      a:hover {
+        color: #2563eb; /* Couleur bleu plus foncé au survol */
+        text-decoration: underline; /* Ajouter un soulignement au survol */
+      }
+      ul {
+        list-style: none; /* Supprimer les puces de liste par défaut */
+        padding: 0; /* Supprimer le rembourrage par défaut */
+        margin-bottom: 1rem; /* Espacement sous la liste */
+      }
+      li {
+        margin-bottom: 0.5rem; /* Espacement entre les éléments de la liste */
+      }
+      .file-item {
+        display: flex; /* Utiliser une mise en page flexible */
+        justify-content: space-between; /* Espacer le nom et le lien */
+        align-items: center; /* Centrer verticalement les éléments */
+        padding: 0.5rem 0; /* Espacement intérieur pour chaque élément de fichier */
+        border-bottom: 1px solid #4a5568; /* Bordure inférieure subtile */
+      }
+      .file-name {
+        font-weight: 500; /* Nom de fichier en gras moyen */
+        margin-right: 1rem; /* Espacement à droite du nom de fichier */
+        word-wrap: break-word;
+      }
+      .download-link {
+        color: #f5f5f5; /* Couleur du lien de téléchargement */
+        background-color: #48bb78; /* Couleur de fond verte */
+        padding: 0.5rem 1rem; /* Espacement intérieur du bouton */
+        border-radius: 0.375rem; /* Arrondir les coins */
+        transition: background-color 0.3s ease; /* Transition douce pour la couleur de fond */
+        word-wrap: break-word;
+      }
+      .download-link:hover {
+        background-color: #38a169; /* Vert plus foncé au survol */
+      }
+      .no-download {
+        color: #cbd5e0; /* Couleur de texte gris clair */
+        padding: 0.5rem 1rem; /* Espacement intérieur */
+        border-radius: 0.375rem; /* Arrondir les coins */
+        background-color: #718096;
+        word-wrap: break-word;
+      }
+      #file-list-container {
+        margin-top: 2rem;
+        border: 1px solid #4a5568;
+        border-radius: 0.375rem;
+        padding: 1rem;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-900 text-gray-200">
+    <div class="container">
+      <header class="text-center py-8">
+        <h1 class="text-4xl font-bold text-green-400">NoComHack</h1>
+        <p class="text-lg text-gray-300">Portfolio de Pentester</p>
+      </header>
+
+      <section class="about py-8">
+        <h2 class="text-2xl font-semibold text-green-300">À Propos de Moi</h2>
+        <p>
+          Bienvenue sur mon portfolio ! Je suis un pentester passionné par la sécurité informatique et la découverte de vulnérabilités.
+          Ce site présente certains de mes projets et outils.
+        </p>
+        <p>
+          Vous trouverez ci-dessous une liste de fichiers disponibles.  Les fichiers marqués d'un lien de téléchargement peuvent être téléchargés.
+        </p>
+      </section>
+
+      <section id="file-list-container" class="py-8">
+        <h2 class="text-2xl font-semibold text-green-300 mb-4">Fichiers Disponibles</h2>
+        <ul id="file-list">
+          </ul>
+      </section>
+    </div>
+
+    <script>
+      const fileList = document.getElementById("file-list");
+
+      // Fonction pour récupérer la liste des fichiers depuis GitHub
+      async function getFileList() {
+        const repoUrl = "https://api.github.com/repos/moullakill/portfolio/contents"; // Remplacez par votre URL de dépôt GitHub
+        try {
+          const response = await fetch(repoUrl);
+          const files = await response.json();
+
+          // Filtrer les fichiers pour ne garder que ceux qui sont des fichiers (type: "file")
+          const filesOnly = files.filter(file => file.type === "file");
+
+          filesOnly.forEach((file) => {
+            if (!file.name.includes("hide")) { // Ajout de la condition pour ne pas afficher les fichiers "hide"
+              const listItem = document.createElement("li");
+              listItem.className = "file-item";
+              const fileNameSpan = document.createElement("span");
+              fileNameSpan.className = "file-name";
+              let displayName = file.name.replace(/_download_(on|off)$/, '');
+              fileNameSpan.textContent = displayName;
+              
+              if (file.name.includes("download_on")) {
+                const downloadLink = document.createElement("a");
+                downloadLink.href = file.download_url;
+                downloadLink.textContent = "Télécharger";
+                downloadLink.className = "download-link";
+                downloadLink.download = displayName; // Suggest a filename for download
+                listItem.appendChild(fileNameSpan);
+                listItem.appendChild(downloadLink);
+              } else if (file.name.includes("download_off")) {
+                  const noDownload = document.createElement("span");
+                  noDownload.textContent = "Non téléchargeable";
+                  noDownload.className = "no-download";
+                  listItem.appendChild(fileNameSpan);
+                  listItem.appendChild(noDownload);
+              }
+               else {
+                listItem.appendChild(fileNameSpan);
+              }
+
+              fileList.appendChild(listItem);
+            }
+          });
+        } catch (error) {
+          console.error("Erreur lors de la récupération de la liste des fichiers :", error);
+          fileList.innerHTML = "<li>Erreur lors du chargement de la liste des fichiers. Veuillez vérifier la console.</li>";
+        }
+      }
+
+      // Appeler la fonction pour récupérer la liste des fichiers au chargement de la page
+      getFileList();
+    </script>
+  </body>
+</html>
